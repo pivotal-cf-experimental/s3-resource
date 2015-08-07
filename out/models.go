@@ -1,7 +1,7 @@
 package out
 
 import (
-	"github.com/concourse/s3-resource"
+	"github.com/pivotal-cf-experimental/s3-resource"
 )
 
 type OutRequest struct {

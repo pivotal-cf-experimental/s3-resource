@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/concourse/s3-resource"
-	"github.com/concourse/s3-resource/out"
+	"github.com/pivotal-cf-experimental/s3-resource"
+	"github.com/pivotal-cf-experimental/s3-resource/out"
 )
 
 func main() {

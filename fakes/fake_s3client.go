@@ -4,7 +4,7 @@ package fakes
 import (
 	"sync"
 
-	"github.com/concourse/s3-resource"
+	"github.com/pivotal-cf-experimental/s3-resource"
 )
 
 type FakeS3Client struct {

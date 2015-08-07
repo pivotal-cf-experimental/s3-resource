@@ -5,8 +5,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/concourse/s3-resource"
 	"github.com/hashicorp/go-version"
+	"github.com/pivotal-cf-experimental/s3-resource"
 )
 
 func Match(paths []string, pattern string) ([]string, error) {

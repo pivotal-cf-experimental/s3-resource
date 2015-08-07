@@ -1,9 +1,9 @@
 package versions_test
 
 import (
-	"github.com/concourse/s3-resource/versions"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/pivotal-cf-experimental/s3-resource/versions"
 )
 
 type MatchFunc func(paths []string, pattern string) ([]string, error)

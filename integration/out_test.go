@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/concourse/s3-resource"
-	"github.com/concourse/s3-resource/out"
+	"github.com/pivotal-cf-experimental/s3-resource"
+	"github.com/pivotal-cf-experimental/s3-resource/out"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/onsi/gomega/gbytes"

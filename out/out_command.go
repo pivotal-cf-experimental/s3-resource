@@ -8,8 +8,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/concourse/s3-resource"
-	"github.com/concourse/s3-resource/versions"
+	"github.com/pivotal-cf-experimental/s3-resource"
+	"github.com/pivotal-cf-experimental/s3-resource/versions"
 )
 
 var ErrObjectVersioningNotEnabled = errors.New("object versioning not enabled")

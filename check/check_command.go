@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/concourse/s3-resource"
-	"github.com/concourse/s3-resource/versions"
+	"github.com/pivotal-cf-experimental/s3-resource"
+	"github.com/pivotal-cf-experimental/s3-resource/versions"
 )
 
 type CheckCommand struct {

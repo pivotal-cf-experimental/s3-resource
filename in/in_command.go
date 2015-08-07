@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 
 	"github.com/cloudfoundry/gunk/urljoiner"
-	"github.com/concourse/s3-resource"
-	"github.com/concourse/s3-resource/versions"
+	"github.com/pivotal-cf-experimental/s3-resource"
+	"github.com/pivotal-cf-experimental/s3-resource/versions"
 )
 
 type RequestURLProvider struct {

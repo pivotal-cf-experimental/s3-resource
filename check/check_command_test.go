@@ -38,10 +38,10 @@ var _ = Describe("Out Command", func() {
 			command = NewCheckCommand(s3client)
 
 			s3client.BucketFilesReturns([]string{
-				"files/abc-0.0.1.tgz",
-				"files/abc-2.33.333.tgz",
-				"files/abc-2.4.3.tgz",
-				"files/abc-3.53.tgz",
+				"folder/1/abc",
+				"folder/2/abc",
+				"folder/3/abc",
+				"folder/4/abc",
 			}, nil)
 		})
 
@@ -53,7 +53,8 @@ var _ = Describe("Out Command", func() {
 		Context("when there is a previous version", func() {
 			It("includes all versions between the previous one and the current one", func() {
 				request.Version.Path = ""
-				request.Source.Regexp = "files/abc-(.*).tgz"
+				request.Source.Folder = "folder"
+				request.Source.Filename = "abc"
 
 				response, err := command.Run(request)
 				Ω(err).ShouldNot(HaveOccurred())
@@ -61,14 +62,15 @@ var _ = Describe("Out Command", func() {
 				Ω(response).Should(HaveLen(1))
 				Ω(response).Should(ConsistOf(
 					s3resource.Version{
-						Path: "files/abc-3.53.tgz",
+						Path: "folder/4/abc",
 					},
 				))
 			})
 
 			Context("when the regexp does not match anything", func() {
 				It("does not explode", func() {
-					request.Source.Regexp = "no-files/missing-(.*).tgz"
+					request.Source.Folder = "wrong-folder"
+					request.Source.Filename = "abc"
 					response, err := command.Run(request)
 					Ω(err).ShouldNot(HaveOccurred())
 
@@ -79,8 +81,9 @@ var _ = Describe("Out Command", func() {
 
 		Context("when there is no previous version", func() {
 			It("includes the latest version only", func() {
-				request.Version.Path = "files/abc-2.4.3.tgz"
-				request.Source.Regexp = "files/abc-(.*).tgz"
+				request.Version.Path = "folder/2/abc"
+				request.Source.Folder = "folder"
+				request.Source.Filename = "abc"
 
 				response, err := command.Run(request)
 				Ω(err).ShouldNot(HaveOccurred())
@@ -88,10 +91,10 @@ var _ = Describe("Out Command", func() {
 				Ω(response).Should(HaveLen(2))
 				Ω(response).Should(ConsistOf(
 					s3resource.Version{
-						Path: "files/abc-2.33.333.tgz",
+						Path: "folder/3/abc",
 					},
 					s3resource.Version{
-						Path: "files/abc-3.53.tgz",
+						Path: "folder/4/abc",
 					},
 				))
 			})

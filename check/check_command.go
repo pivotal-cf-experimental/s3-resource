@@ -23,11 +23,7 @@ func (command *CheckCommand) Run(request CheckRequest) (CheckResponse, error) {
 		return CheckResponse{}, errors.New(message)
 	}
 
-	if request.Source.Regexp != "" {
-		return command.checkByRegex(request)
-	} else {
-		return command.checkByVersionedFile(request)
-	}
+	return command.checkByRegex(request)
 }
 
 func (command *CheckCommand) checkByRegex(request CheckRequest) (CheckResponse, error) {
@@ -45,7 +41,8 @@ func (command *CheckCommand) checkByRegex(request CheckRequest) (CheckResponse, 
 		}
 		response = append(response, version)
 	} else {
-		lastVersion, ok := versions.Extract(request.Version.Path, request.Source.Regexp)
+		pattern := request.Source.Folder + "/(.*)/" + request.Source.Filename
+		lastVersion, ok := versions.Extract(request.Version.Path, pattern)
 		if !ok {
 			return response, fmt.Errorf("version number could not be found in: %s", request.Version.Path)
 		}

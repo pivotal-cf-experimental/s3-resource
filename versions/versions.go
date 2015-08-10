@@ -10,7 +10,7 @@ import (
 )
 
 func Match(paths []string, pattern string) ([]string, error) {
-	return MatchUnanchored(paths, "^"+pattern+"$")
+	return MatchUnanchored(paths, pattern+"$")
 }
 
 func MatchUnanchored(paths []string, pattern string) ([]string, error) {
@@ -119,22 +119,21 @@ func PrefixHint(regex string) string {
 }
 
 func GetBucketFileVersions(client s3resource.S3Client, source s3resource.Source) Extractions {
-	regexp := source.Regexp
-	hint := PrefixHint(regexp)
+	folder := source.Folder
 
-	paths, err := client.BucketFiles(source.Bucket, hint)
+	paths, err := client.BucketFiles(source.Bucket, folder)
 	if err != nil {
 		s3resource.Fatal("listing files", err)
 	}
 
-	matchingPaths, err := Match(paths, source.Regexp)
+	matchingPaths, err := Match(paths, source.Filename)
 	if err != nil {
 		s3resource.Fatal("finding matches", err)
 	}
 
 	var extractions = make(Extractions, 0, len(matchingPaths))
 	for _, path := range matchingPaths {
-		extraction, ok := Extract(path, regexp)
+		extraction, ok := Extract(path, folder+"/(.*)/"+source.Filename)
 
 		if ok {
 			extractions = append(extractions, extraction)
